@@ -1,29 +1,49 @@
-import { useEffect, useState } from 'react'
-import { NewsBanner } from '../../components/NewsBanner'
-import { getNews } from '../../api/apiNews'
+import { useEffect, useState } from 'react';
+import { NewsBanner } from '../../components/NewsBanner';
+import { getNews } from '../../api/apiNews';
 
 import styles from './styles.module.css';
-import { NewsList } from '../../components/NewsList'
-import { Skeleton } from '../../components/Skeleton/Skeleton'
-
+import { NewsList } from '../../components/NewsList';
+import { Skeleton } from '../../components/Skeleton/Skeleton';
+import { Pagination } from '../../components/Pagination';
 
 export const Main = () => {
-	const [news, setNews] = useState([])
-	const [isLoading, setIsLoading] = useState(true)
+	const [news, setNews] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const totalPages = 10;
+	const pageSize = 10;
+
 	useEffect(() => {
-		const fetchNews = async () => {
+		const fetchNews = async currentPage => {
 			try {
 				setIsLoading(true);
-				const responce = await getNews()
+				const responce = await getNews(currentPage, pageSize);
 				const data = responce.news;
-				setNews(data); 
+				setNews(data);
 				setIsLoading(false);
 			} catch (error) {
 				console.log(error.message);
 			}
+		};
+		fetchNews(currentPage);
+	}, [currentPage]);
+
+	const handleNextPage = () => {
+		if (currentPage < totalPages) {
+			setCurrentPage(currentPage + 1);
 		}
-		fetchNews()
-	}, [])
+	};
+	const handlePrevPage = () => {
+		if (currentPage > 1) {
+			setCurrentPage(currentPage - 1);
+		}
+	};
+	const handlePageClick = pageNumber => {
+		setCurrentPage(pageNumber);
+	};
+
 	return (
 		<main className={styles.main}>
 			{news.length > 0 && !isLoading ? (
@@ -31,11 +51,25 @@ export const Main = () => {
 			) : (
 				<Skeleton type='banner' count={1} />
 			)}
+			<Pagination
+				totalPages={totalPages}
+				handleNextPage={handleNextPage}
+				handlePrevPage={handlePrevPage}
+				handlePageClick={handlePageClick}
+				currentPage={currentPage}
+			/>
 			{!isLoading ? (
 				<NewsList news={news} />
 			) : (
 				<Skeleton type='item' count={10} />
 			)}
+			<Pagination
+				totalPages={totalPages}
+				handleNextPage={handleNextPage}
+				handlePrevPage={handlePrevPage}
+				handlePageClick={handlePageClick}
+				currentPage={currentPage}
+			/>
 		</main>
 	);
 };
