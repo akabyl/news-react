@@ -4,7 +4,7 @@ export const Categories = ({categories, setSelectionCategory, selectionCategory}
 	
 	return (
 		<div className={styles.categories}>
-			{categories.map(category => (
+			{categories ? categories.map(category => (
 				<button
 					onClick={() => setSelectionCategory(category)}
 					className={
@@ -14,7 +14,7 @@ export const Categories = ({categories, setSelectionCategory, selectionCategory}
 				>
 					{category}
 				</button>
-			))}
+			)) : <span>Загрузка категорий</span> }
 		</div>
 	);
 };
