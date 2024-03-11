@@ -23,7 +23,6 @@ export const Pagination = ({
 							onClick={() => handlePageClick(index + 1)}
 							className={styles.pageNumber}
 							disabled={currentPage === index + 1}
-							activePage
 							key={index}
 						>
 							{index + 1}
