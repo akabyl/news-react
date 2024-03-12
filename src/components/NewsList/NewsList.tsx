@@ -1,8 +1,7 @@
-
-import withSkeleton from '../../helpers/Hocs/withSkeleton'
-import { INews } from '../../interfaces'
-import NewsItem from '../NewsItem/NewsItem'
-import styles from './styles.module.css'
+import withSkeleton from '../../helpers/Hocs/withSkeleton';
+import { INews } from '../../interfaces';
+import NewsItem from '../NewsItem/NewsItem';
+import styles from './styles.module.css';
 
 export interface Props {
 	news?: INews[];
@@ -11,13 +10,9 @@ export interface Props {
 const NewsList = ({ news }: Props) => {
 	return (
 		<ul className={styles.list}>
-			{news ? (
-				news.map(item => {
-					return <NewsItem key={item.id} item={item} />;
-				})
-			) : (
-				<span>Загрузка...</span>
-			)}
+			{news?.map(item => {
+				return <NewsItem key={item.id} item={item} />;
+			})}
 		</ul>
 	);
 };
