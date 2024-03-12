@@ -1,1 +1,0 @@
-export { NewsBanner } from './NewsBanner';

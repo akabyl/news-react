@@ -1,0 +1,19 @@
+.search {
+	display: flex;
+	width: 100%;
+	background-color: #fff;
+	gap: 12px;
+}
+
+.input {
+	margin-top: 15px;
+	width: 100%;
+	padding: 8px 10px;
+	border: 1px solid #f2f3f5;
+  border-radius: 10px;
+}
+@media (max-width: 767px) {
+  .input {
+    width: 100%;
+  }
+}
